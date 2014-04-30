@@ -464,7 +464,7 @@ void awhpState()
   
   // Wait until the boiler has cooled down before starting again
   else {
-    if ( DS18B20Sensors[sensorInlet].temperature < 30 ) {
+    if ( DS18B20Sensors[sensorInlet].temperature < 30.5 ) {
       awhpRunning = true;
     }
   }
