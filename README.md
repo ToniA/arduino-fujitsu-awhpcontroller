@@ -21,4 +21,4 @@ The Bill of Materials
 
 Photo of the Controller
 -----------------------
-![Photo](https://github.com/ToniA/arduino-fujitsu-awhpcontroller/blob/master/controller.jpg)
+![Photo](https://raw.githubusercontent.com/ToniA/arduino-fujitsu-awhpcontroller/master/controller.jpg)
