@@ -18,3 +18,7 @@ The Bill of Materials
 * 4-channel relay board
 * 4x DS18B20 1-wire temperature sensors
 * 2x16 characters LCD display, based on the Hitachi HD44780 driver
+
+Photo of the Controller
+-----------------------
+![Photo](https://github.com/ToniA/arduino-fujitsu-awhpcontroller/blob/master/controller.jpg)
