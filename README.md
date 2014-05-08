@@ -23,12 +23,15 @@ Purpose of the relays
 ---------------------
 
 Relay 1
-* Controls the heatpump defrost cheating. Connects a 68kOhm resistor in parallel with the outdoor unit's pipe temp sensor, to prevent the unit from defrosting. One of the 1-wire sensors measures the pipe temp, and the relay is controlled by the difference between the outdoor air and pipe temp temperatures
+* Controls the heatpump defrost cheating
+   * Connects a 68kOhm resistor in parallel with the outdoor unit's pipe temp sensor, to prevent the unit from defrosting
+   * One of the 1-wire sensors measures the pipe temp, and the relay is controlled by the difference between the outdoor air and pipe temp temperatures
 * See the function 'awhpDefrostSignal'
 
 Relay 2
 * Controls the sewer pipe heating, and also the compressor heating cable
 * By default the heating is on practically from October to March, now it's only running when really needed
+* This relay does not control the heating directly, but just shows two different (fixed) temperature values to Ouman EH-203, the real relay and program is on the Ouman side
 * See the function 'sewerHeatingCableSignal'
 
 Relay 3
