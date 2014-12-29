@@ -88,7 +88,7 @@ const int sensorPipetemp = 3;
 
 // Stock defrost threshold
 
-byte defrostThreshold = 7;
+float defrostThreshold = 7.0;
 
 
 // LCD pins
@@ -187,7 +187,7 @@ void setup(void) {
 
   xpl.SendExternal = &sendUdPMessage;  // pointer to the send callback
   xpl.ip = ipAddress;
-  xpl.SetSource_P(PSTR("xpl"), PSTR("arduino"), PSTR("awhpcontroller")); // parameters for hearbeat message
+  xpl.SetSource_P(PSTR("xpl"), PSTR("arduino"), PSTR("awhpcontroller")); // parameters for the heartbeat message
 
   // Watchdog requires ADABOOT to work
   // See:
@@ -282,9 +282,15 @@ void startReading()
 void takeReading()
 {
   byte i;
+  float temperature;
 
   for ( i = 0; i < sizeof(DS18B20Sensors) / sizeof(DS18B20Sensor); i++ ) {
-    DS18B20Sensors[i].temperature = owSensors.getTempC(DS18B20Sensors[i].device.onewireAddress);
+    temperature = owSensors.getTempC(DS18B20Sensors[i].device.onewireAddress);
+
+    // Sometimes we get read errors -> only allow sensible values
+    if (temperature > -40.0 && temperature < 100.0) {
+      DS18B20Sensors[i].temperature = temperature;
+    }
   }
 }
 
@@ -411,8 +417,10 @@ void sewerHeatingCableSignal()
     digitalWrite(SEWER_HEATING, LOW);
     sewerHeating = true;
     nextSewerCableCheck = 900000L; // 15 min
-  } else if (DS18B20Sensors[sensorOutdoor].temperature < 0.0 && DS18B20Sensors[sensorPipetemp].temperature > 0.0) {
-    // Probably defrosting
+  } else if (DS18B20Sensors[sensorOutdoor].temperature < 0.0 &&
+             DS18B20Sensors[sensorPipetemp].temperature > 0.0 &&
+             awhpRunning) {
+    // Probably defrosting, heat for 15 minutes
     digitalWrite(SEWER_HEATING, LOW);
     sewerHeating = true;
     nextSewerCableCheck = 900000L; // 15 min
